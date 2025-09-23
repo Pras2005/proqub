@@ -7,4 +7,4 @@ like radiance-to-reflectance conversion and destriping in a memory-efficient pip
 
 from .processor import CubeProcessor, run_pipeline
 
-__version__ = "2.0.0"
+__version__ = "1.0.0"

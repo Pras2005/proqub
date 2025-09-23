@@ -1,8 +1,8 @@
 """
-Hyperspectral Cube Processing Library (v2.0.0 - General Purpose)
+Hyperspectral Cube Processing Library (v2.1.0 - Simplified API)
 
-A focused library for processing hyperspectral imagery. This version uses
-agnostic naming and a memory-efficient, block-processing pipeline.
+A focused library for processing hyperspectral imagery. This version provides
+a core CubeProcessor class for granular, step-by-step workflow control.
 """
 
 import numpy as np
@@ -12,8 +12,8 @@ import os
 import gc
 from typing import Tuple, Optional
 
-__version__ = "2.0.0"
-__authors__ = "Prasad_desale,Aryan_burhade,Tanishka_kotkar"
+__version__ = "1.0.0"
+__author__ = "Prasad, Aryan, Tanishka"
 
 
 class CubeProcessor:
@@ -52,7 +52,6 @@ class CubeProcessor:
     def parse_geometric_param(self, file_path: str, fallback_value: float = 0.0) -> float:
         """
         Parses a text file to extract a single mean geometric parameter (e.g., incidence angle).
-        Assumes the value is the last item in each line.
         """
         if not os.path.exists(file_path):
             self._print(f"Geometric param file not found. Using fallback: {fallback_value}")
@@ -209,51 +208,3 @@ class CubeProcessor:
         del destriped_mm, destriped_file
         gc.collect()
         self._print(f"Destriping complete. Saved to: {output_hdr_path}")
-
-
-def run_pipeline(
-    hdr_path: str,
-    data_path: str,
-    flux_data_path: str,
-    geometric_param_path: str,
-    output_dir: str = "./processed",
-    incidence_angle: Optional[float] = None,
-    interleave_format: str = 'bsq'
-) -> Tuple[str, str]:
-    """
-    High-level wrapper to run the standard processing pipeline.
-    """
-    processor = CubeProcessor()
-    
-    # --- Radiance to Reflectance Step ---
-    radiance_image = processor.open_cube(hdr_path, data_path)
-    flux_data = processor.load_flux_data(flux_data_path)
-    if incidence_angle is None:
-        incidence_angle = processor.parse_geometric_param(geometric_param_path)
-    
-    os.makedirs(output_dir, exist_ok=True)
-    reflectance_base_path = os.path.join(output_dir, "reflectance_cube")
-    processor.radiance_to_reflectance(
-        radiance_img=radiance_image,
-        output_path_base=reflectance_base_path,
-        flux_data=flux_data,
-        incidence_angle_deg=incidence_angle,
-        interleave_format=interleave_format
-    )
-    del radiance_image
-
-    # --- Destriping Step ---
-    reflectance_path_hdr = reflectance_base_path + '.hdr'
-    reflectance_image = spy.open_image(reflectance_path_hdr)
-    destriped_base_path = os.path.join(output_dir, "destriped_reflectance_cube")
-    processor.destripe_cube(
-        input_img=reflectance_image,
-        output_path_base=destriped_base_path,
-        interleave_format=interleave_format
-    )
-    del reflectance_image
-    
-    final_reflectance_path = reflectance_base_path + '.hdr'
-    final_destriped_path = destriped_base_path + '.hdr'
-    
-    return final_reflectance_path, final_destriped_path
