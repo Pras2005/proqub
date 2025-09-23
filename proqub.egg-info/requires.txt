@@ -1,0 +1,5 @@
+numpy
+pandas
+spectral
+matplotlib
+plotly
