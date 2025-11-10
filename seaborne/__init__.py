@@ -7,4 +7,4 @@ like radiance-to-reflectance conversion and destriping in a memory-efficient pip
 
 from .processor import CubeProcessor
 from .processor import MLExamples
-__version__ = "1.0.6"
+__version__ = "1.0.9"
