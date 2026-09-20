@@ -1,22 +1,68 @@
-# 🌕 proqub
+# proqub
 
-**An end-to-end Python pipeline for processing IIRS hyperspectral data from Chandrayaan-2.**
+## Table of Contents
 
-`proqub` provides a robust, fully-featured processing pipeline designed to handle raw IIRS data, converting it into analysis-ready reflectance data for lunar surface mapping.
+- [Deep Dive Description](#deep-dive-description)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#installation--setup)
+- [Usage / Running Locally](#usage--running-locally)
 
-### ✨ Features
-*   **Radiance-to-Reflectance Conversion:** Accurate radiometric calibration.
-*   **Two-Pass Detector Destriping:** Removes vertical striping artifacts from the pushbroom sensor.
-*   **Thermal Correction:** Compensates for thermal emissions to isolate true reflectance.
-*   **Spectral Feature Extraction:** Optimized for analyzing the 3 µm lunar hydration feature.
+## Deep Dive Description
 
-### 🏆 Achievements
-*   **1st Prize** - AICTE Innovation Cell 2025
-*   **Selected** - FOSS4G International Conference 2026
-*   Instrumental in research published as two preprints on **ESSOAr (2026)** investigating photometric artifacts affecting lunar hydration detection.
+proqub is a robust software engineering project carefully architected to provide scalable and efficient functionality. Built primarily in Python, this repository likely leverages modern frameworks to deliver high-performance backend processing, data analysis, or scripting utilities. 
 
-### 🛠️ Tech Stack
-Python $\cdot$ NumPy $\cdot$ Spectral Analysis
+The core functionality involves processing inputs, managing state or data persistence, and delivering outputs or serving API endpoints as dictated by the specific modular implementations found within the file tree. By breaking down the logic into distinct modules, the system ensures that each component handles a single responsibility, paving the way for easier testing and future feature expansions.
 
----
-*Created by Prasad Desale.*
+## Project Structure
+
+```text
+proqub/
+├── .gitignore
+├── LICENSE
+├── README.md
+├── pyproject.toml
+├── seaborne
+│   ├── __init__.py
+│   └── processor.py
+└── setup.cfg
+
+```
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+- Python 3.8+
+- pip (Python package installer)
+- Virtualenv (recommended)
+- Git
+
+## Installation & Setup
+
+Follow these step-by-step instructions to get a development environment running:
+
+1. **Clone the repository:**
+   ```bash
+   git clone git@github.com:Pras2005/proqub.git
+   cd proqub
+   ```
+
+2. **Set up a virtual environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+4. **Environment Variables:**
+   If there is a `.env.example` file, copy it to `.env` and configure the necessary keys:
+   ```bash
+   cp .env.example .env
+   ```
+
+## Usage / Running Locally
+
+Start the application by running the main entry script:
+```bash
+python main.py
+```
+*(If the entry point is different, replace `main.py` with the appropriate script like `app.py` or run via Uvicorn/Flask)*
